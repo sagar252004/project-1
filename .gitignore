@@ -7,13 +7,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-../backend/node_modules
-../backend/.env
 
-node_modules
 dist
 dist-ssr
 *.local
+
+
+# Ignore node_modules directory
+/backend/node_modules
+
+# Ignore .env file
+.env
+
 
 # Editor directories and files
 .vscode/*
@@ -21,7 +26,8 @@ dist-ssr
 .idea
 .DS_Store
 *.suo
-*.ntvs*
+.ntvs
 *.njsproj
 *.sln
-*.sw?  gitignore file for ignore backend/nodemodules
+*.sw?
+node_modules

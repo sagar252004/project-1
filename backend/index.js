@@ -8,23 +8,25 @@ import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
 
-
 dotenv.config({});
-const app = express();
 
+const app = express();
 
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cookieParser());
-
 const corsOptions = {
-    origin : "http//localhost:5173",
-    Credentials : true
-
+    origin:'http://localhost:5173', 
+    credentials:true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }
+
 app.use(cors(corsOptions));
-const port = process.env.PORT;
+
+const PORT = process.env.PORT || 8000;
+
 
 // api's
 app.use("/api/v1/user", userRoute);
@@ -33,7 +35,8 @@ app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 
 
-app.listen( port, ()=>{
+
+app.listen(PORT,()=>{
     connectDB();
-    console.log(`server is running at port ${port}`);
-});
+    console.log(`Server running at port ${PORT}`);
+})

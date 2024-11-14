@@ -6,7 +6,7 @@ import { RadioGroup } from '../ui/radio-group'
 import { Button } from '../ui/button'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { USER_API_END_POINT } from '@/utils/constant'
+import { USER_API_END_POINT } from '@/utils/constant.js'
 import { toast } from 'sonner'
 import { useDispatch, useSelector } from 'react-redux'
 import { setLoading } from '@/redux/authSlice'
@@ -22,9 +22,9 @@ const Signup = () => {
         role: "",
         file: ""
     });
-    // const {loading,user} = useSelector(store=>store.auth);
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const {loading,user} = useSelector(store=>store.auth);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const changeEventHandler = (e) => {
         setInput({ ...input, [e.target.name]: e.target.value });
@@ -34,7 +34,7 @@ const Signup = () => {
     }
     const submitHandler = async (e) => {
         e.preventDefault();
-        const formData = new FormData();    //formdata object
+        const formData = new FormData();
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
         formData.append("phoneNumber", input.phoneNumber);
@@ -45,18 +45,15 @@ const Signup = () => {
         }
 
         try {
-            // dispatch(setLoading(true));
-            // headers: This sets the HTTP headers for the request. Here,
-            //  Content-Type is set to "multipart/form-data", 
-            // indicating that the body of the request will contain form data, which is typical when uploading files.
+            dispatch(setLoading(true));
             const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
                 headers: { 'Content-Type': "multipart/form-data" },
                 withCredentials: true,
             });
-            // if (res.data.success) {
-            //     navigate("/login");
-            //     toast.success(res.data.message);
-            // }
+            if (res.data.success) {
+                navigate("/login");
+                toast.success(res.data.message);
+            }
         } catch (error) {
             console.log(error);
             toast.error(error.response.data.message);
@@ -65,11 +62,12 @@ const Signup = () => {
         }
     }
 
-    // useEffect(()=>{
-    //     if(user){
-    //         navigate("/");
-    //     }
-    // },[])
+    useEffect(()=>{
+        if(user){
+            navigate("/");
+        }
+    },[user, navigate])
+
     return (
         <div>
             <Navbar />
@@ -113,7 +111,7 @@ const Signup = () => {
                             value={input.password}
                             name="password"
                             onChange={changeEventHandler}
-                            placeholder="patel@gmail.com"
+                            placeholder="Enter password"
                         />
                     </div>
                     <div className='flex items-center justify-between'>
@@ -152,7 +150,7 @@ const Signup = () => {
                         </div>
                     </div>
                     {
-                        loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Signup</Button>
+                        loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" onClick={submitHandler} className="w-full my-4">Signup</Button>
                     }
                     <span className='text-sm'>Already have an account? <Link to="/login" className='text-blue-600'>Login</Link></span>
                 </form>
