@@ -78,6 +78,7 @@ const handleDelete = (companyId) => {
                       onClick={() =>
                         navigate(`/admin/companies/${company._id}`)
                       }
+                      
                       className="flex items-center gap-2 w-fit cursor-pointer hover:bg-gray-100 p-2 rounded-md"
                     >
                       <Edit2 className="w-4 text-gray-600" />

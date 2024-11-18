@@ -8,8 +8,10 @@ const useGetAllAdminJobs = () => {
     const dispatch = useDispatch();
     useEffect(()=>{
         const fetchAllAdminJobs = async () => {
+            console.log("i am in get admin job hook")
             try {
                 const res = await axios.get(`${JOB_API_END_POINT}/getadminjobs`,{withCredentials:true});
+                console.log(res.data.jobs)
                 if(res.data.success){
                     dispatch(setAllAdminJobs(res.data.jobs));
                 }

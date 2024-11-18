@@ -103,12 +103,14 @@ export const getAdminJobs = async (req, res) => {
 export const updateJob = async (req, res) => {
     try {
         const { title, description, requirements,salary,location,jobType  } = req.body;
-
+        console.log(req.body);
         // Update company data
         const updateData = { title, description, requirements,salary,location,jobType  };
-        const company = await Job.findByIdAndUpdate(req.params.id, updateData, { new: true });
+        console.log(updateData);
+        
+        const job = await Job.findByIdAndUpdate(req.params.id, updateData, { new: true });
 
-        if (!company) {
+        if (!job) {
             return res.status(404).json({
                 message: "Job not found.",
                 success: false

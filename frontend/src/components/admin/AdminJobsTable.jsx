@@ -10,16 +10,23 @@ import {
 } from "../ui/table";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { Edit2, Eye, MoreHorizontal } from "lucide-react";
-import { useSelector } from "react-redux";
+import { Edit2, Eye, MoreHorizontal, Trash } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import { deleteJobAsync } from "@/redux/jobSlice";
 
 const AdminJobsTable = () => {
   const { allAdminJobs, searchJobByText } = useSelector((store) => store.job);
 
   const [filterJobs, setFilterJobs] = useState(allAdminJobs);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleDelete = (jobId) => {
+    if (window.confirm("Are you sure you want to delete this Job?")) {
+      dispatch(deleteJobAsync(jobId));
+    }
+  };
 
   useEffect(() => {
     const filteredJobs = allAdminJobs.filter((job) => {
@@ -33,7 +40,6 @@ const AdminJobsTable = () => {
     });
     setFilterJobs(filteredJobs);
   }, [allAdminJobs, searchJobByText]);
-
 
   return (
     <div>
@@ -49,7 +55,7 @@ const AdminJobsTable = () => {
         </TableHeader>
         <TableBody>
           {filterJobs?.map((job) => (
-            <tr>
+            <TableRow key={job._id}>
               <TableCell>{job?.company?.name}</TableCell>
               <TableCell>{job?.title}</TableCell>
               <TableCell>{job?.createdAt.split("T")[0]}</TableCell>
@@ -60,7 +66,7 @@ const AdminJobsTable = () => {
                   </PopoverTrigger>
                   <PopoverContent className="w-32">
                     <div
-                      onClick={() => navigate(`/admin/jobs/${job._id}`)}
+                      onClick={() => navigate(`/admin/jobs/update/${job._id}`)}
                       className="flex items-center gap-2 w-fit cursor-pointer"
                     >
                       <Edit2 className="w-4" />
@@ -75,10 +81,17 @@ const AdminJobsTable = () => {
                       <Eye className="w-4" />
                       <span>Applicants</span>
                     </div>
+                    <div
+                      onClick={() => handleDelete(job._id)}
+                      className="flex items-center gap-2 w-fit cursor-pointer hover:text-red-800 hover:bg-red-100 p-2 rounded-md"
+                    >
+                      <Trash className="w-4" />
+                      <span>Delete</span>
+                    </div>
                   </PopoverContent>
                 </Popover>
               </TableCell>
-            </tr>
+            </TableRow>
           ))}
         </TableBody>
       </Table>
