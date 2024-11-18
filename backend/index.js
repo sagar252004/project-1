@@ -17,7 +17,7 @@ const app = express();
 
 app.use(cookieParser());
 const corsOptions = {
-    origin: 'http://localhost:5174', // Change to match your frontend URL
+    origin: 'http://localhost:5173', // Change to match your frontend URL
     credentials: true,               // Allow cookies to be sent
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
