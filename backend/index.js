@@ -12,28 +12,17 @@ dotenv.config();
 
 const app = express();
 
-// middleware
+// Middleware
 app.use(cookieParser());
 
-// Update CORS configuration to allow multiple origins
-const corsOptions = {
-    origin: function (origin, callback) {
-        // Allow both localhost and the deployed frontend URL
-        const allowedOrigins = [
-            'https://job-hunt-now.vercel.app' // Deployed frontend URL
-        ];
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true,  // Allow cookies to be sent
+// Simplified CORS configuration for localhost only
+app.use(cors({
+    origin: 'https://job-hunt-now.vercel.app', // Allow only localhost
+    credentials: true, // Allow cookies to be sent
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
-};
+}));
 
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -46,5 +35,5 @@ app.use("/api/v1/application", applicationRoute);
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     connectDB();
-    console.log(`Server running at port ${PORT}`);
+    console.log(Server running at port ${PORT});
 });
