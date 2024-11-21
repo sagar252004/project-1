@@ -12,8 +12,9 @@ dotenv.config();
 
 const app = express();
 
-// middleware
+// Middleware
 app.use(cookieParser());
+
 
 // Update CORS configuration to allow multiple origins
 const corsOptions = {
@@ -22,7 +23,7 @@ const corsOptions = {
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 };
 
-app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -35,5 +36,9 @@ app.use("/api/v1/application", applicationRoute);
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
     connectDB();
+
     console.log(`Server running at port ${PORT}`);
 });
+
+
+
