@@ -20,7 +20,6 @@ const corsOptions = {
     origin: function (origin, callback) {
         // Allow both localhost and the deployed frontend URL
         const allowedOrigins = [
-            'http://localhost:5173', // Local development URL
             'https://job-hunt-now.vercel.app' // Deployed frontend URL
         ];
         if (!origin || allowedOrigins.includes(origin)) {
