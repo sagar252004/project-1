@@ -23,6 +23,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions)); // Use CORS middleware
 
+
+
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
