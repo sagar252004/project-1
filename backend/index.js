@@ -17,7 +17,7 @@ app.use(cookieParser());
 
 // Update CORS configuration to allow multiple origins
 const corsOptions = {
-    origin: 'http://localhost:5173', // Allowed origins
+    origin: 'https://jobhunt-qzby.onrender.com', // Allowed origins
     credentials: true, // Allow cookies to be sent
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 };
