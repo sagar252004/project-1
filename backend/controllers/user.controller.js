@@ -218,3 +218,44 @@ export const updateProfile = async(req, res) => {
     }
 }
 
+export const savedJobs = async(req, res) => {
+    try {
+        const { jobId } = req.body;
+        const userId = req.id;
+
+        let user = await User.findById(userId)
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false
+            })
+        }
+
+        if (user.profile.savedJobs.includes(jobId)) {
+            return res.status(400).json({
+                message: "Job is already saved",
+                success: false
+            })
+        }
+
+        user.profile.savedJobs.push(jobId);
+        await user.save()
+
+        await user.populate('profile.savedJobs');
+        return res.status(200).json({
+            user,
+            message: "Job saved successfully",
+            success: true,
+            savedJobs: user.profile.savedJobs
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "An error occurred",
+            error: error.message,
+            success: false
+        });
+
+    }
+}

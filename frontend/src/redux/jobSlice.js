@@ -79,7 +79,6 @@ const jobSlice = createSlice({
         },
 
         setSearchedQuery: (state, action) => {
-            console.log("vvvvvv",state.searchedQuery);
             state.searchedQuery = action.payload;
         },
     },

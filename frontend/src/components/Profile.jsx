@@ -9,6 +9,7 @@ import AppliedJobTable from './AppliedJobTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
 import { useSelector } from 'react-redux'
 import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
+import SavedJobsTable from './SavedJobsTable';
 
 // const skills = ["Html", "Css", "Javascript", "Reactjs"]
 const isResume = true;
@@ -25,7 +26,7 @@ const Profile = () => {
                 <div className='flex justify-between'>
                     <div className='flex items-center gap-4'>
                         <Avatar className="h-24 w-24">
-                            <AvatarImage src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt="profile" />
+                            <AvatarImage src={user?.profile?.profilePhoto} alt="profile" />
                         </Avatar>
                         <div>
                             <h1 className='font-medium text-xl'>{user?.fullname}</h1>
@@ -63,6 +64,13 @@ const Profile = () => {
                 <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
                 {/* Applied Job Table   */}
                 <AppliedJobTable />
+
+                 {/* Saved Jobs Section */ }
+                 <div className='bg-white rounded-2xl shadow-md p-6 my-6'>
+                    <h1 className='font-bold text-lg text-blue-600 mb-4'>Saved Jobs</h1>
+                    <SavedJobsTable />
+                </div>
+
             </div>
             <UpdateProfileDialog open={open} setOpen={setOpen}/>
         </div>

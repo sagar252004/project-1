@@ -2,17 +2,44 @@ import React from 'react';
 import { Button } from './ui/button';
 import { Bookmark } from 'lucide-react';
 import { Avatar, AvatarImage } from './ui/avatar';
+import { setsavedJobs } from '@/redux/authSlice';
 import { Badge } from './ui/badge';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'sonner';
+import axios from "axios";
+import { USER_API_END_POINT } from '@/utils/constant';
+
 
 const Job = ({ job }) => {
+    const { savedJobs } = useSelector(store => store.auth);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const daysAgoFunction = (mongodbTime) => {
         const createdAt = new Date(mongodbTime);
         const currentTime = new Date();
         const timeDifference = currentTime - createdAt;
         return Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    };
+
+    const handleSaveForLater = async (jobId) => {
+        console.log('entered')
+        try {
+            const response = await axios.post(`${USER_API_END_POINT}/savedjob`, { jobId }, {
+                withCredentials: true,
+            });
+            console.log(response);
+            if (response) {
+                dispatch(setsavedJobs(response?.data?.savedJobs))
+                toast.success(response?.data?.message)
+            }
+        }catch (error) {
+            console.log(error);
+            toast.error(error.response?.data?.message || "An error occurred");
+        }
+        
     };
 
     return (
@@ -76,9 +103,18 @@ const Job = ({ job }) => {
                 >
                     Details
                 </Button>
-                <Button className="bg-[#7209b7] text-white font-semibold hover:bg-[#5f32ad]">
+                {/* <Button className="bg-[#7209b7] text-white font-semibold hover:bg-[#5f32ad]">
                     Save For Later
-                </Button>
+                </Button> */}
+
+        
+                {
+                    savedJobs?.some(savedJobs => savedJobs._id.toString() === job?._id.toString()) ?
+                        <Button className='bg-green-500 text-white' >Saved Already</Button> :
+                        <Button className="bg-[#7209b7] text-white font-semibold hover:bg-[#5f32ad]" onClick={ () => handleSaveForLater(job._id) }>Save For Later
+                        </Button>
+                }
+
             </div>
         </div>
     );

@@ -21,13 +21,21 @@ const persistConfig = {
     version: 1,
     storage,
 }
-
-const rootReducer = combineReducers({
+// Root reducer with reset logic
+const appReducer = combineReducers({
     auth:authSlice,
     job:jobSlice,
     company:companySlice,
     application:applicationSlice
-})
+});
+const rootReducer = (state, action) => {
+    if (action.type === 'LOGOUT') {
+        // Clear the persisted state
+        storage.removeItem('persist:root');
+        state = undefined;
+    }
+    return appReducer(state, action);
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 

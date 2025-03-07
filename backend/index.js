@@ -15,9 +15,9 @@ const app = express();
 // Middleware
 app.use(cookieParser());
 
-// Update CORS configuration to allow multiple origins
+
 const corsOptions = {
-    origin:  'https://job-hunt-now.vercel.app', // Allowed origins
+    origin: 'http://localhost:5173', // Allowed origins
     credentials: true, // Allow cookies to be sent
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 };
