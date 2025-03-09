@@ -12,23 +12,26 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
-app.use(cookieParser());
-
-
+// CORS Setup (Ensure cookies are allowed)
 const corsOptions = {
-    origin: 'https://project-1-pi-ashy.vercel.app', // Allowed origins
-    credentials: true, // Allow cookies to be sent
+    origin: 'https://project-1-pi-ashy.vercel.app', // Allowed frontend URL
+    credentials: true, // Allow sending cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'], // Ensure cookies & auth headers work
+    optionsSuccessStatus: 204,
 };
-app.use(cors(corsOptions)); // Use CORS middleware
+app.use(cors(corsOptions));
 
+// Middleware Order Fix
+app.use(express.json()); // Parse JSON
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data
+app.use(cookieParser()); // Parses incoming cookies
 
-
-
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Debugging: Check if cookies are received
+app.use((req, res, next) => {
+    console.log("🔹 Cookies Received:", req.cookies);
+    next();
+});
 
 // API routes
 app.use("/api/v1/user", userRoute);
