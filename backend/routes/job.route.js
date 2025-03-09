@@ -10,7 +10,7 @@ const router = express.Router();
 router.route("/post").post(isAuthenticated,postJob);
 router.route("/get").get(getAllJobs);
 router.route("/getadminJobs").get(isAuthenticated,getAdminJobs);
-router.route("/get/:id").get(isAuthenticated,getJobById);
+router.route("/get/:id").get(getJobById);
 router.route("/update/:id").put(isAuthenticated,singleUpload, updateJob);
 router.route("/:id").delete(isAuthenticated,deleteJob);
 
