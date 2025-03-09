@@ -28,6 +28,7 @@ const Job = ({ job }) => {
         console.log('entered')
         try {
             const response = await axios.post(`${USER_API_END_POINT}/savedjob`, { jobId }, {
+                headers: { "Content-Type": "application/json" },
                 withCredentials: true,
             });
             console.log(response);
