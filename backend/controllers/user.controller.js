@@ -132,6 +132,7 @@ export const login = async(req, res) => {
                 user,
                 success: true,
             });
+        console.log("Token Set in Cookie in user controller:", token);
     } catch (error) {
         console.error("Error in login route:", {
             message: error.message,
