@@ -230,6 +230,7 @@ export const savedJobs = async(req, res) => {
     try {
         const { jobId } = req.body;
         const userId = req.id;
+        console.log("saved jobs user id in controller",userId);
 
         let user = await User.findById(userId)
         if (!user) {
