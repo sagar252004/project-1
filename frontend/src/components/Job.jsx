@@ -32,7 +32,7 @@ const Job = ({ job }) => {
                 "Content-Type": "application/json",
               
             },
-                withCredentials: true,
+                {withCredentials: true},
             });
             console.log(response);
             if (response) {
