@@ -63,3 +63,26 @@ Follow these steps to set up JobHunt on your local machine:
    git init
    git clone https://github.com/yourusername/JobHunt.git
    cd JobHunt
+
+2. **Install backend dependencies:**
+   ```sh
+    npm install
+   
+3️. **Set up environment variables:**
+   ```sh
+   PORT=3000
+   DATABASE_URL=your_database_url
+   JWT_SECRET=your_secret_key
+```
+4️. **Run the backend server:**
+   ```sh
+     npm run start
+```
+5️. **Navigate to the frontend directory and install dependencies:**
+   ```sh
+   cd frontend
+   npm install
+```
+6️. **Start the frontend server:**
+   ```sh
+   npm run dev
