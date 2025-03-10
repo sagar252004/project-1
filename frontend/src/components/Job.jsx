@@ -30,9 +30,8 @@ const Job = ({ job }) => {
             const response = await axios.post(`${USER_API_END_POINT}/savedjob`, { jobId }, {
                 headers: { 
                 "Content-Type": "application/json",
-              
-            },
-                {withCredentials: true},
+                },
+                withCredentials: true,
             });
             console.log(response);
             if (response) {
