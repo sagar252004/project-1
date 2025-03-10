@@ -67,7 +67,7 @@ const Profile = () => {
 
                  {/* Saved Jobs Section */ }
                  <div className='bg-white rounded-2xl shadow-md p-6 my-6'>
-                    <h1 className='font-bold text-lg text-blue-600 mb-4'>Saved Jobs</h1>
+                    <h1 className='font-bold text-lg my-5'>Saved Jobs</h1>
                     <SavedJobsTable />
                 </div>
 
