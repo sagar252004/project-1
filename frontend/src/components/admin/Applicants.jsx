@@ -10,9 +10,11 @@ import { setAllApplicants } from '@/redux/applicationSlice';
 const Applicants = () => {
     const params = useParams();
     const dispatch = useDispatch();
-    const {applicants} = useSelector(store=>store.application);
+    const { applicants } = useSelector(store => store.application);
 
     useEffect(() => {
+        let isPolling = true;
+
         const fetchAllApplicants = async () => {
             try {
                 const res = await axios.get(`${APPLICATION_API_END_POINT}/${params.id}/applicants`, { withCredentials: true });
@@ -20,9 +22,20 @@ const Applicants = () => {
             } catch (error) {
                 console.log(error);
             }
-        }
-        fetchAllApplicants();
-    }, []);
+        };
+
+        const pollApplicants = async () => {
+            while (isPolling) {
+                await fetchAllApplicants();
+                await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds before the next poll
+            }
+        };
+
+        pollApplicants();
+
+        return () => { isPolling = false; }; // Cleanup function to stop polling
+    }, [dispatch, params.id]);
+
     return (
         <div>
             <Navbar />
@@ -31,7 +44,7 @@ const Applicants = () => {
                 <ApplicantsTable />
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Applicants
+export default Applicants;
