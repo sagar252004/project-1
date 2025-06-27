@@ -32,7 +32,7 @@ JobHunt is a job portal website designed to connect job seekers with employers. 
 - Express.js  
 
 **Database:**  
-- SQL (PostgreSQL/MySQL)  
+- MongoDB  
 
 **Authentication:**  
 - JWT-based authentication  
